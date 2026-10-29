@@ -29,12 +29,18 @@ bun tools/pocket.ts compile \
 
 ## Install and launch
 
-The package is copied to both locations:
+Copy the package into the game library and it shows up in the launcher:
 
-- PocketJS app storage: `/storage/pocketjs/apps/star-drift.pocket`
-- User game content: `/storage/content/games/misc/star-drift.pocket`
+```sh
+cp star-drift.pocket /storage/content/games/misc/
+```
 
-The device's `pocketshell-games` scanner currently indexes ROM file extensions such as `.gba`, `.sfc` and `.chd`; it does not index `.pocket`. The device also has no `/usr/bin/pocketshell-play` launcher installed. As a result, the package is present under the requested games directory but does not appear in Library or launch from it yet. It was manually launched for device verification with:
+The device's `pocketshell-games` scanner indexes `.pocket` packages as games
+(`kind: "pocketjs"`), and `pocketshell-play` starts them through the PocketJS
+session wrapper. On the handheld: **Library → GAMES → misc / star-drift → A**.
+
+The same package is also kept at `/storage/pocketjs/apps/star-drift.pocket` for a
+direct foreground run:
 
 ```sh
 /storage/pocketjs/session-run \
@@ -43,7 +49,10 @@ The device's `pocketshell-games` scanner currently indexes ROM file extensions s
   --card /dev/dri/card1
 ```
 
-The PocketJS demo is manually deployed from `/storage`; it is not part of the ROCKNIX system image.
+Exiting the session restores the launcher (`pocketjs-kms` on `boot.pocket`).
+
+The PocketJS demo is deployed from `/storage`; it is not part of the ROCKNIX
+system image.
 
 ## Files
 
